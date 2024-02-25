@@ -1,95 +1,64 @@
 ﻿using ConsoleApp1;
+using System;
+using System.Linq;
+using System.Reflection;
 
-//create list
+
 List<Movie> movieList = new List<Movie>();
-
-//establish 10 movies in list
 movieList.Add(new Movie("Treasure Planet", "animated"));
 movieList.Add(new Movie("Emperors New Groove", "animated"));
-movieList.Add(new Movie("", ""));
-movieList.Add(new Movie("", ""));
-movieList.Add(new Movie("", ""));
-movieList.Add(new Movie("", ""));
-movieList.Add(new Movie("", ""));
-movieList.Add(new Movie("", ""));
-movieList.Add(new Movie("", ""));
-movieList.Add(new Movie("", ""));
+movieList.Add(new Movie("Fellowship of the Ring", "fantasy"));
+movieList.Add(new Movie("Red Dawn", "thriller"));
+movieList.Add(new Movie("Harry Potter and the Prisoner of Azkaban", "fantasy"));
+movieList.Add(new Movie("The Mummy", "adventure"));
+movieList.Add(new Movie("Pricess Bride", "comedy"));
+movieList.Add(new Movie("The Mask", "comedy"));
+movieList.Add(new Movie("The Prestige", "thriller"));
+movieList.Add(new Movie("Tomb Raider", "adventure"));
 
-Console.WriteLine(DisplayMovies("animated"));
+
 
 Console.WriteLine("Welcome to the Movie List Application!");
 Console.WriteLine("");
-Console.WriteLine($"There are {movieList.Count} in this list");
 Console.WriteLine("Youll be able search our movie library by entering a category of movie.");
 string userAnswer = "";
-int numberOfUses = 0;
-//create While loop
+
+
 while (true)
 {
-    if (numberOfUses == 0)
-    {
-        Console.WriteLine("Before we start would you like to see a" +
-            " list of the movie categories? (y/n): ");
-        userAnswer = Console.ReadLine();
-        if (userAnswer.ToLower().Trim() == "y")
-        {
-            DisplayCategories();
-        }
-    }
-    else 
-    {
-        Console.WriteLine("Would you like to see the categories again? (y/n): ");
-        userAnswer = Console.ReadLine();
-        if (userAnswer.ToLower().Trim() == "y")
-        {
-            DisplayCategories();
-        }
-    }
-
     Console.Write("What category are you interested in?: ");
     string userInput = Console.ReadLine();
-    if(userInput.ToLower().Trim() != )
+    bool validMovieCategory = movieList.Exists(x => x.Category == userInput.ToLower().Trim());
+   
 
-
-
-
+    List<Movie> moviesInCategory = movieList.Where(x => x.Category.Contains(userInput.ToLower().Trim())).ToList();
+    if (validMovieCategory == true)
+    {
+        foreach (Movie title in moviesInCategory)
+        {
+            Console.WriteLine(title.Title);
+        }
+    }
+    else
+    {
+    Console.WriteLine("Im sorry that is not a valid category.");
+    }
     //Loop break out
     Console.Write("Continue? (y/n): ");
     userAnswer = Console.ReadLine();
     if (userAnswer.ToLower().Trim() != "y")
-    { break; }
-    numberOfUses++;
-}
-
-
-
-
-
-
-
-
-
-
-//Method to display Categories
-void DisplayCategories()
-{
-    foreach (Movie movie in movieList)
     {
-        Console.WriteLine(movie.Category);
-    }
-}
-
-//Method for valid category
-
-//Method to display movies
-//need to split in narrowing the category and displaying the category
-void DisplayMovies(string category)
-{
-    var chosenCategory = movieList.FindAll(x => x.Category == category);
-
-    foreach (Movie movie in chosenCategory)
-    {
-        Console.WriteLine(movie.Title);
+        Console.WriteLine("Goodbye!");
+        break;
     }
 
 }
+
+
+
+
+
+
+
+
+
